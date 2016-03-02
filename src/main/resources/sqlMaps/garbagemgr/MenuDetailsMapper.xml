@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.anchora.garbage.dao.MenuDetailsMapper" >
+  <resultMap id="BaseResultMap" type="me.anchora.garbage.entry.MenuDetails" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="menu_id" property="menuId" jdbcType="BIGINT" />
+    <result column="lang_id" property="langId" jdbcType="BIGINT" />
+    <result column="menu_value" property="menuValue" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="BIGINT" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, menu_id, lang_id, menu_value, remark, created_at, created_by, updated_at, updated_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.anchora.garbage.entry.MenuDetailsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_menu_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_menu_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_menu_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.anchora.garbage.entry.MenuDetailsCriteria" >
+    delete from t_menu_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.anchora.garbage.entry.MenuDetails" >
+    insert into t_menu_details (id, menu_id, lang_id, 
+      menu_value, remark, created_at, 
+      created_by, updated_at, updated_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT}, #{langId,jdbcType=BIGINT}, 
+      #{menuValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.anchora.garbage.entry.MenuDetails" >
+    insert into t_menu_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="langId != null" >
+        lang_id,
+      </if>
+      <if test="menuValue != null" >
+        menu_value,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="langId != null" >
+        #{langId,jdbcType=BIGINT},
+      </if>
+      <if test="menuValue != null" >
+        #{menuValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.anchora.garbage.entry.MenuDetailsCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_menu_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_menu_details
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuId != null" >
+        menu_id = #{record.menuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.langId != null" >
+        lang_id = #{record.langId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuValue != null" >
+        menu_value = #{record.menuValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null" >
+        created_by = #{record.createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedBy != null" >
+        updated_by = #{record.updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_menu_details
+    set id = #{record.id,jdbcType=BIGINT},
+      menu_id = #{record.menuId,jdbcType=BIGINT},
+      lang_id = #{record.langId,jdbcType=BIGINT},
+      menu_value = #{record.menuValue,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      created_by = #{record.createdBy,jdbcType=BIGINT},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{record.updatedBy,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.anchora.garbage.entry.MenuDetails" >
+    update t_menu_details
+    <set >
+      <if test="menuId != null" >
+        menu_id = #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="langId != null" >
+        lang_id = #{langId,jdbcType=BIGINT},
+      </if>
+      <if test="menuValue != null" >
+        menu_value = #{menuValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.anchora.garbage.entry.MenuDetails" >
+    update t_menu_details
+    set menu_id = #{menuId,jdbcType=BIGINT},
+      lang_id = #{langId,jdbcType=BIGINT},
+      menu_value = #{menuValue,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="me.anchora.garbage.entry.MenuDetailsCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_menu_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="createTable">
+CREATE TABLE t_menu_details (
+id bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号ID',
+menu_id bigint(20) NOT NULL COMMENT 'menu id',
+lang_id bigint(20) NOT NULL COMMENT 'language ID',
+menu_value varchar(1000) COMMENT '菜单显示名',
+remark varchar(1000),
+created_at datetime,
+created_by bigint(20),
+updated_at datetime,
+updated_by bigint(20),
+PRIMARY KEY (id),
+UNIQUE KEY ix_menu_details_1 (menu_id, lang_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+  </select>
+
+  <select id="insertData">
+INSERT INTO `t_menu_details` VALUES
+ ('1', '1', '1', 'Overview', null, sysdate(), null, null, null),
+ ('2', '1', '2', '总览', null, sysdate(), null, null, null),
+ ('3', '2', '1', 'Management', null, sysdate(), null, null, null),
+ ('4', '2', '2', '系统管理', null, sysdate(), null, null, null),
+ ('5', '3', '1', 'Settings', null, sysdate(), null, null, null),
+ ('6', '3', '2', '设置', null, sysdate(), null, null, null),
+ ('7', '4', '1', 'Users', null, sysdate(), null, null, null),
+ ('8', '4', '2', '用户管理', null, sysdate(), null, null, null),
+ ('9', '5', '1', 'QR Codes', null, sysdate(), null, null, null),
+ ('10', '5', '2', '二维码管理', null, sysdate(), null, null, null),
+ ('11', '6', '1', 'Garbages', null, sysdate(), null, null, null),
+ ('12', '6', '2', '垃圾管理', null, sysdate(), null, null, null),
+ ('13', '7', '1', 'Stations', null, sysdate(), null, null, null),
+ ('14', '7', '2', '分拣中心管理', null, sysdate(), null, null, null),
+ ('15', '8', '1', 'Garbages Cans', null, sysdate(), null, null, null),
+ ('16', '8', '2', '垃圾桶管理', null, sysdate(), null, null, null),
+ ('17', '9', '1', 'Garbage Types', null, sysdate(), null, null, null),
+ ('18', '9', '2', '垃圾类别管理', null, sysdate(), null, null, null),
+ ('19', '10', '1', 'Gifts', null, sysdate(), null, null, null),
+ ('20', '10', '2', '礼品管理', null, sysdate(), null, null, null),
+ ('21', '11', '1', 'Gift Grants', null, sysdate(), null, null, null),
+ ('22', '11', '2', '礼品发放管理', null, sysdate(), null, null, null),
+ ('27', '12', '1', 'Configurations', null, sysdate(), null, null, null),
+ ('28', '12', '2', '系统配置', null, sysdate(), null, null, null),
+ ('29', '13', '1', 'Report', null, sysdate(), null, null, null),
+ ('30', '13', '2', '报表管理', null, sysdate(), null, null, null),
+ ('31', '14', '1', 'Type report', null, sysdate(), null, null, null),
+ ('32', '14', '2', '垃圾类别报表', null, sysdate(), null, null, null),
+ ('33', '15', '1', 'User report', null, sysdate(), null, null, null),
+ ('34', '15', '2', '用户垃圾报表', null, sysdate(), null, null, null)
+  </select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:cloud="http://schema.cloudfoundry.org/spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://schema.cloudfoundry.org/spring
+        http://schema.cloudfoundry.org/spring/cloudfoundry-spring.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd"
+	default-lazy-init="false">
+<!-- 
+	<bean id="DS-garbagemgr" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
+		<property name="uniqueResourceName">
+            <value>garbagemgr_ds</value>
+        </property>
+        <property name="xaDataSourceClassName" value="${garbagemgr.driver}" />
+        <property name="xaProperties">
+            <props>
+                <prop key="user">${garbagemgr.username}</prop>
+                <prop key="password">${garbagemgr.password}</prop>
+                <prop key="serverName">${garbagemgr.ip}</prop>
+                <prop key="portNumber">${garbagemgr.port}</prop>
+                <prop key="databaseName">${garbagemgr.dbname}</prop>
+                <prop key="autoReconnect">true</prop>
+                <prop key="useUnicode">true</prop>
+                <prop key="characterEncoding">utf-8</prop>
+           </props>
+        </property>
+        
+        <property name="poolSize" value="30"/>
+        <property name="testQuery" value="SELECT 1"/>
+	</bean>
+ -->	
+	<bean id="DS-garbagemgr" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${garbagemgr.driver}"/>
+		<property name="url" value="jdbc:mysql://${garbagemgr.ip}:${garbagemgr.port}/${garbagemgr.dbname}?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true"/>
+		<property name="username" value="${garbagemgr.username}"/>
+		<property name="password" value="${garbagemgr.password}"/>
+        <property name="validationQuery" value="SELECT 1"/>
+	</bean>
+
+</beans>

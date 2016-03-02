@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.anchora.garbage.dao.GarbagesMapper">
+  <resultMap id="BaseResultMap" type="me.anchora.garbage.entry.Garbages">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="garbage_station_id" jdbcType="BIGINT" property="garbageStationId" />
+    <result column="garbage_can_id" jdbcType="BIGINT" property="garbageCanId" />
+    <result column="qr_code_id" jdbcType="BIGINT" property="qrCodeId" />
+    <result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="garbage_type_id" jdbcType="BIGINT" property="garbageTypeId" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, garbage_station_id, garbage_can_id, qr_code_id, qr_code, user_id, garbage_type_id, 
+    weight, score, remark, created_at, created_by, updated_at, updated_by
+  </sql>
+  <select id="selectByExample" parameterType="me.anchora.garbage.entry.GarbagesCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_garbages
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_garbages
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_garbages
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.anchora.garbage.entry.GarbagesCriteria">
+    delete from t_garbages
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.anchora.garbage.entry.Garbages">
+    insert into t_garbages (id, garbage_station_id, garbage_can_id, 
+      qr_code_id, qr_code, user_id, 
+      garbage_type_id, weight, score, 
+      remark, created_at, created_by, 
+      updated_at, updated_by)
+    values (#{id,jdbcType=BIGINT}, #{garbageStationId,jdbcType=BIGINT}, #{garbageCanId,jdbcType=BIGINT}, 
+      #{qrCodeId,jdbcType=BIGINT}, #{qrCode,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{garbageTypeId,jdbcType=BIGINT}, #{weight,jdbcType=REAL}, #{score,jdbcType=REAL}, 
+      #{remark,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="me.anchora.garbage.entry.Garbages">
+    insert into t_garbages
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="garbageStationId != null">
+        garbage_station_id,
+      </if>
+      <if test="garbageCanId != null">
+        garbage_can_id,
+      </if>
+      <if test="qrCodeId != null">
+        qr_code_id,
+      </if>
+      <if test="qrCode != null">
+        qr_code,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="garbageTypeId != null">
+        garbage_type_id,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="garbageStationId != null">
+        #{garbageStationId,jdbcType=BIGINT},
+      </if>
+      <if test="garbageCanId != null">
+        #{garbageCanId,jdbcType=BIGINT},
+      </if>
+      <if test="qrCodeId != null">
+        #{qrCodeId,jdbcType=BIGINT},
+      </if>
+      <if test="qrCode != null">
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="garbageTypeId != null">
+        #{garbageTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.anchora.garbage.entry.GarbagesCriteria" resultType="java.lang.Integer">
+    select count(*) from t_garbages
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_garbages
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.garbageStationId != null">
+        garbage_station_id = #{record.garbageStationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.garbageCanId != null">
+        garbage_can_id = #{record.garbageCanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qrCodeId != null">
+        qr_code_id = #{record.qrCodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qrCode != null">
+        qr_code = #{record.qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.garbageTypeId != null">
+        garbage_type_id = #{record.garbageTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=REAL},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        created_by = #{record.createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedAt != null">
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedBy != null">
+        updated_by = #{record.updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_garbages
+    set id = #{record.id,jdbcType=BIGINT},
+      garbage_station_id = #{record.garbageStationId,jdbcType=BIGINT},
+      garbage_can_id = #{record.garbageCanId,jdbcType=BIGINT},
+      qr_code_id = #{record.qrCodeId,jdbcType=BIGINT},
+      qr_code = #{record.qrCode,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      garbage_type_id = #{record.garbageTypeId,jdbcType=BIGINT},
+      weight = #{record.weight,jdbcType=REAL},
+      score = #{record.score,jdbcType=REAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      created_by = #{record.createdBy,jdbcType=BIGINT},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{record.updatedBy,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.anchora.garbage.entry.Garbages">
+    update t_garbages
+    <set>
+      <if test="garbageStationId != null">
+        garbage_station_id = #{garbageStationId,jdbcType=BIGINT},
+      </if>
+      <if test="garbageCanId != null">
+        garbage_can_id = #{garbageCanId,jdbcType=BIGINT},
+      </if>
+      <if test="qrCodeId != null">
+        qr_code_id = #{qrCodeId,jdbcType=BIGINT},
+      </if>
+      <if test="qrCode != null">
+        qr_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="garbageTypeId != null">
+        garbage_type_id = #{garbageTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.anchora.garbage.entry.Garbages">
+    update t_garbages
+    set garbage_station_id = #{garbageStationId,jdbcType=BIGINT},
+      garbage_can_id = #{garbageCanId,jdbcType=BIGINT},
+      qr_code_id = #{qrCodeId,jdbcType=BIGINT},
+      qr_code = #{qrCode,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      garbage_type_id = #{garbageTypeId,jdbcType=BIGINT},
+      weight = #{weight,jdbcType=REAL},
+      score = #{score,jdbcType=REAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="me.anchora.garbage.entry.GarbagesCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_garbages
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="sumWeightByExample" parameterType="me.anchora.garbage.entry.GarbagesCriteria" resultType="java.lang.Double">
+    select IFNULL(sum(weight), 0) from t_garbages
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <resultMap extends="BaseResultMap" id="WithOtherResultMap" type="me.anchora.garbage.entry.Garbages">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="garbage_station_id" jdbcType="BIGINT" property="garbageStationId" />
+    <result column="garbage_can_id" jdbcType="BIGINT" property="garbageCanId" />
+    <result column="qr_code_id" jdbcType="BIGINT" property="qrCodeId" />
+    <result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="garbage_type_id" jdbcType="BIGINT" property="garbageTypeId" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="updated_by" jdbcType="BIGINT" property="updatedBy" />
+	<association javaType="me.anchora.garbage.entry.Users" property="users">
+    	<id column="u_id" jdbcType="BIGINT" property="id" />
+	    <result column="u_user_name" jdbcType="VARCHAR" property="userName" />
+	    <result column="u_password" jdbcType="VARCHAR" property="password" />
+	    <result column="u_real_name" jdbcType="VARCHAR" property="realName" />
+    	<result column="u_score" jdbcType="REAL" property="score" />
+	    <result column="u_gender" jdbcType="VARCHAR" property="gender" />
+	    <result column="u_birthday" jdbcType="DATE" property="birthday" />
+	    <result column="u_village" jdbcType="VARCHAR" property="village" />
+	    <result column="u_phone" jdbcType="VARCHAR" property="phone" />
+	    <result column="u_address" jdbcType="VARCHAR" property="address" />
+	    <result column="u_timezone" jdbcType="VARCHAR" property="timezone" />
+	    <result column="u_is_admin" jdbcType="VARCHAR" property="isAdmin" />
+	    <result column="u_current_login" jdbcType="TIMESTAMP" property="currentLogin" />
+	    <result column="u_last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+	    <result column="u_current_login_ip" jdbcType="VARCHAR" property="currentLoginIp" />
+	    <result column="u_last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+	    <result column="u_remark" jdbcType="VARCHAR" property="remark" />
+	    <result column="u_created_at" jdbcType="TIMESTAMP" property="createdAt" />
+	    <result column="u_created_by" jdbcType="BIGINT" property="createdBy" />
+	    <result column="u_updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+	    <result column="u_updated_by" jdbcType="BIGINT" property="updatedBy" />
+	</association>
+	<association javaType="me.anchora.garbage.entry.GarbageCans" property="garbageCans">
+		<id column="gc_id" jdbcType="BIGINT" property="id" />
+		<result column="gc_can_name" jdbcType="VARCHAR" property="canName" />
+		<result column="gc_village" jdbcType="VARCHAR" property="village" />
+		<result column="gc_address" jdbcType="VARCHAR" property="address" />
+		<result column="gc_station_op" jdbcType="VARCHAR" property="stationOp" />
+		<result column="gc_remark" jdbcType="VARCHAR" property="remark" />
+		<result column="gc_created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="gc_created_by" jdbcType="BIGINT" property="createdBy" />
+		<result column="gc_updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="gc_updated_by" jdbcType="BIGINT" property="updatedBy" />
+	</association>
+	<association javaType="me.anchora.garbage.entry.GarbageStations" property="garbageStations">
+		<id column="gs_id" jdbcType="BIGINT" property="id" />
+		<result column="gs_station_name" jdbcType="VARCHAR" property="stationName" />
+		<result column="gs_phone" jdbcType="VARCHAR" property="phone" />
+		<result column="gs_address" jdbcType="VARCHAR" property="address" />
+		<result column="gs_station_op" jdbcType="VARCHAR" property="stationOp" />
+		<result column="gs_remark" jdbcType="VARCHAR" property="remark" />
+		<result column="gs_created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="gs_created_by" jdbcType="BIGINT" property="createdBy" />
+		<result column="gs_updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="gs_updated_by" jdbcType="BIGINT" property="updatedBy" />
+	</association>
+	<association javaType="me.anchora.garbage.entry.GarbageTypes" property="garbageTypes">
+		<id column="gt_id" jdbcType="BIGINT" property="id" />
+		<result column="gt_type_name" jdbcType="VARCHAR" property="typeName" />
+    	<result column="gt_score_weight" jdbcType="REAL" property="scoreWeight" />
+		<result column="gt_remark" jdbcType="VARCHAR" property="remark" />
+		<result column="gt_created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="gt_created_by" jdbcType="BIGINT" property="createdBy" />
+		<result column="gt_updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="gt_updated_by" jdbcType="BIGINT" property="updatedBy" />
+	</association>
+	<association javaType="me.anchora.garbage.entry.QrCodes" property="qrCodes">
+		<id column="qc_id" jdbcType="BIGINT" property="id" />
+		<result column="qc_user_id" jdbcType="BIGINT" property="userId" />
+		<result column="qc_qr_code_start" jdbcType="VARCHAR" property="qrCodeStart" />
+		<result column="qc_qr_code_end" jdbcType="VARCHAR" property="qrCodeEnd" />
+		<result column="qc_remark" jdbcType="VARCHAR" property="remark" />
+		<result column="qc_created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="qc_created_by" jdbcType="BIGINT" property="createdBy" />
+		<result column="qc_updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="qc_updated_by" jdbcType="BIGINT" property="updatedBy" />
+	</association>
+  </resultMap>
+  
+  <sql id="WithOther_Where_Clause">
+  	<where>
+  		<if test="userName != null and userName != ''">
+  			u.user_name like '${userName}'
+  		</if>
+  		<if test="realName != null and realName != ''">
+  			u.real_name like '${realName}'
+  		</if>
+  		<if test="qrCode != null and qrCode != ''">
+  			g.qr_code like '${qrCode}'
+  		</if>
+  		<if test="typeName != null and typeName != ''">
+  			gt.type_name like '${typeName}'
+  		</if>
+  		<if test="stationName != null and stationName != ''">
+  			gs.station_name like '${stationName}'
+  		</if>
+  		<if test="remark != null and remark != ''">
+  			g.remark like '${remark}'
+  		</if>
+  	</where>
+  </sql>
+  
+  <select id="selectByExampleWithOtherWithRowbounds" parameterType="me.anchora.garbage.entry.Garbages" resultMap="WithOtherResultMap">
+    SELECT
+    <if test="distinct">
+      distinct
+    </if>
+	g.id, g.garbage_station_id, g.garbage_can_id, g.qr_code_id, g.qr_code, g.user_id, g.garbage_type_id, g.weight, g.score, g.remark, g.created_at, g.created_by, g.updated_at, g.updated_by,
+	u.id as u_id, u.user_name as u_user_name, u.password as u_password, u.real_name as u_real_name, u.score as u_score, u.gender as u_gender, u.birthday as u_birthday, u.village as u_village, u.phone as u_phone, u.address as u_address, u.timezone as u_timezone, u.is_admin as u_is_admin, u.current_login as u_current_login, u.last_login as u_last_login, u.current_login_ip as u_current_login_ip, u.last_login_ip as u_last_login_ip, u.remark as u_remark, u.created_at as u_created_at, u.created_by as u_created_by, u.updated_at as u_updated_at, u.updated_by as u_updated_by,
+	gc.id as gc_id,gc.can_name as gc_can_name,gc.village as gc_village,gc.address as gc_address,gc.station_op as gc_station_op,gc.remark as gc_remark,gc.created_at as gc_created_at,gc.created_by as gc_created_by,gc.updated_at as gc_updated_at,gc.updated_by as gc_updated_by,
+	gs.id as gs_id,gs.station_name as gs_station_name,gs.phone as gs_phone,gs.address as gs_address,gs.station_op as gs_station_op,gs.remark as gs_remark,gs.created_at as gs_created_at,gs.created_by as gs_created_by,gs.updated_at as gs_updated_at,gs.updated_by as gs_updated_by,
+	gt.id as gt_id,gt.type_name as gt_type_name,gt.score_weight as gt_score_weight,gt.remark as gt_remark,gt.created_at as gt_created_at,gt.created_by as gt_created_by,gt.updated_at as gt_updated_at,gt.updated_by as gt_updated_by
+	FROM t_garbages g
+	LEFT JOIN t_garbage_stations gs ON gs.id = g.garbage_station_id
+	LEFT JOIN t_garbage_cans gc ON gc.id = g.garbage_can_id
+	LEFT JOIN t_garbage_types gt ON gt.id = g.garbage_type_id
+	LEFT JOIN t_qr_codes qc ON qc.id = g.qr_code_id
+	LEFT JOIN t_users u ON u.id = qc.user_id
+    <if test="_parameter != null">
+      <include refid="WithOther_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="countByExampleWithOther" parameterType="me.anchora.garbage.entry.Garbages" resultType="java.lang.Integer">
+	SELECT count(*)
+	FROM t_garbages g
+	LEFT JOIN t_garbage_stations gs ON gs.id = g.garbage_station_id
+	LEFT JOIN t_garbage_cans gc ON gc.id = g.garbage_can_id
+	LEFT JOIN t_garbage_types gt ON gt.id = g.garbage_type_id
+	LEFT JOIN t_qr_codes qc ON qc.id = g.qr_code_id
+	LEFT JOIN t_users u ON u.id = qc.user_id
+    <include refid="WithOther_Where_Clause" />
+  </select>
+  
+  <resultMap id="garbageTypeReportMap" type="me.anchora.garbage.entry.base.ReportVo">
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="sum" jdbcType="REAL" property="sum" />
+  </resultMap>
+
+  <select id="garbageTypeReport" parameterType="me.anchora.garbage.entry.Garbages" resultMap="garbageTypeReportMap">
+	select gt.type_name as type_name, sum(g.weight) as sum from t_garbages g
+	left join t_garbage_types gt on g.garbage_type_id=gt.id
+	group by gt.id
+  </select>
+  
+  <resultMap id="userGarbageTypeReportMap" type="me.anchora.garbage.entry.base.ReportVo">
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="sum" jdbcType="REAL" property="sum" />
+  </resultMap>
+  
+  <sql id="User_Garbage_Type_Report_Where_Clause">
+    <where>
+        <if test="typeId != null and typeId != ''">
+            gt.id like '${typeId}'
+        </if>
+        <if test="userId != null and userId != ''">
+            u.id like '${userId}'
+        </if>
+        <if test="userName != null and userName != ''">
+            u.user_name like '${userName}'
+        </if>
+        <if test="userPhone != null and userPhone != ''">
+            u.phone like '${userPhone}'
+        </if>
+    </where>
+  </sql>
+
+  <select id="garbageTypeReportWithRowbounds" parameterType="me.anchora.garbage.entry.base.ReportVo" resultMap="userGarbageTypeReportMap">
+	select u.user_name as user_name, u.id as user_id, u.phone as user_phone, gt.type_name as type_name, sum(g.weight) as sum from t_garbages g
+	left join t_qr_codes qc on qc.id=g.qr_code_id
+	left join t_users u on qc.user_id=u.id
+	left join t_garbage_types gt on g.garbage_type_id=gt.id
+    <if test="_parameter != null">
+      <include refid="User_Garbage_Type_Report_Where_Clause" />
+    </if>
+	group by u.id, gt.id
+	order by sum desc
+  </select>
+  
+  <select id="userGarbageTypeReportCount" parameterType="me.anchora.garbage.entry.base.ReportVo" resultType="java.lang.Integer">
+  select count(*) from (
+    select u.user_name as user_name, u.id as user_id, u.phone as user_phone, gt.type_name as type_name, sum(g.weight) as sum from t_garbages g
+    left join t_qr_codes qc on qc.id=g.qr_code_id
+    left join t_users u on qc.user_id=u.id
+    left join t_garbage_types gt on g.garbage_type_id=gt.id
+    <if test="_parameter != null">
+      <include refid="User_Garbage_Type_Report_Where_Clause" />
+    </if>
+    group by u.id, gt.id
+    ) tmp
+  </select>
+  
+  <select id="createTable">
+	CREATE TABLE t_garbages (
+	id bigint(20) NOT NULL AUTO_INCREMENT,
+	garbage_station_id bigint(20) NOT NULL,
+	garbage_can_id bigint(20),
+	qr_code_id bigint(20) NOT NULL,
+	qr_code varchar(100) NOT NULL,
+	user_id bigint(20) NOT NULL,
+	garbage_type_id bigint(20) NOT NULL,
+	weight float(20,2) NOT NULL,
+	score float(20,2) NOT NULL,
+	remark varchar(1000),
+	created_at datetime,
+	created_by bigint(20),
+	updated_at datetime,
+	updated_by bigint(20),
+	PRIMARY KEY (id),
+	UNIQUE KEY ix_T_GARBAGES_1 (qr_code)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8
+  </select>
+
+  <select id="insertData">
+  </select>
+</mapper>

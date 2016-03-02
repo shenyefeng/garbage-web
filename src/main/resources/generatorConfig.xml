@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+	<classPathEntry location="D:\users\Jhon-Y9\.m2\repository\mysql\mysql-connector-java\5.1.26\mysql-connector-java-5.1.26.jar" />
+	<context id="context4" targetRuntime="MyBatis3">
+		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+			<property name="searchString" value="Example$" />
+			<property name="replaceString" value="Criteria" />
+		</plugin>
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/garbage-mgr"
+			userId="root" password="root" />
+		<javaModelGenerator targetPackage="me.anchora.garbage.entry" targetProject="D:\java\workspace\garbagemgr\src\main\java">
+			<property name="trimStrings" value="true" />
+			<property name="rootClass" value="me.anchora.garbage.entry.base.PageEntry" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="sqlMaps.garbagemgr" targetProject="D:\java\workspace\garbagemgr\src\main\resources" />
+		<javaClientGenerator targetPackage="me.anchora.garbage.dao" targetProject="D:\java\workspace\garbagemgr\src\main\java"
+			type="XMLMAPPER" />
+
+		<!-- 
+		<table tableName="t_menu_details" domainObjectName="MenuDetails"/>
+		<table tableName="t_menu_languages" domainObjectName="MenuLanguages"/>
+		<table tableName="t_menu_actions" domainObjectName="MenuActions"/>
+		<table tableName="t_menus" domainObjectName="Menus">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperMenus" />
+		</table>
+		<table tableName="t_qr_codes" domainObjectName="QrCodes">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperQrCodes" />
+		</table>
+		<table tableName="t_garbage_stations" domainObjectName="GarbageStations"/>
+		<table tableName="t_garbage_cans" domainObjectName="GarbageCans"/>
+		<table tableName="t_gift_grants" domainObjectName="GiftGrants">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperGiftGrants" />
+		</table>
+		<table tableName="t_system_config" domainObjectName="SystemConfig">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperSystemConfig" />
+		</table>
+		 <table tableName="t_operation_logs" domainObjectName="OperationLogs"/>
+		<table tableName="t_garbage_types" domainObjectName="GarbageTypes"/>
+		<table tableName="t_garbages" domainObjectName="Garbages">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperGarbages" />
+		</table>
+		<table tableName="t_gifts" domainObjectName="Gifts"/>
+		<table tableName="t_users" domainObjectName="Users">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperUsers" />
+		</table>
+		 <table tableName="t_score_details" domainObjectName="ScoreDetails">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperScoreDetails" />
+		</table>
+
+		<table tableName="t_roles" domainObjectName="Roles"/>
+		<table tableName="t_role_users" domainObjectName="RoleUsers">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperRoleUsers" />
+		</table>
+		<table tableName="t_role_menus" domainObjectName="RoleMenus">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperRoleMenus" />
+		</table>
+		<table tableName="t_user_menus" domainObjectName="UserMenus">
+			<property name="rootClass" value="me.anchora.garbage.entry.base.SuperUserMenus" />
+		</table>
+		 -->
+		 
+	</context>
+</generatorConfiguration>

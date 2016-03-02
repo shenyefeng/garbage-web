@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.anchora.garbage.dao.GiftGrantsMapper" >
+  <resultMap id="BaseResultMap" type="me.anchora.garbage.entry.GiftGrants" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gift_id" property="giftId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="gift_num" property="giftNum" jdbcType="REAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="BIGINT" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gift_id, user_id, gift_num, remark, created_at, created_by, updated_at, updated_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.anchora.garbage.entry.GiftGrantsCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_gift_grants
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_gift_grants
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_gift_grants
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.anchora.garbage.entry.GiftGrantsCriteria" >
+    delete from t_gift_grants
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.anchora.garbage.entry.GiftGrants" >
+    insert into t_gift_grants (id, gift_id, user_id, 
+      gift_num, remark, created_at, 
+      created_by, updated_at, updated_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{giftId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{giftNum,jdbcType=REAL}, #{remark,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=BIGINT}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.anchora.garbage.entry.GiftGrants" >
+    insert into t_gift_grants
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="giftId != null" >
+        gift_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="giftNum != null" >
+        gift_num,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="giftId != null" >
+        #{giftId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="giftNum != null" >
+        #{giftNum,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.anchora.garbage.entry.GiftGrantsCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_gift_grants
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_gift_grants
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.giftId != null" >
+        gift_id = #{record.giftId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.giftNum != null" >
+        gift_num = #{record.giftNum,jdbcType=REAL},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null" >
+        created_by = #{record.createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedBy != null" >
+        updated_by = #{record.updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_gift_grants
+    set id = #{record.id,jdbcType=BIGINT},
+      gift_id = #{record.giftId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      gift_num = #{record.giftNum,jdbcType=REAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      created_by = #{record.createdBy,jdbcType=BIGINT},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{record.updatedBy,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.anchora.garbage.entry.GiftGrants" >
+    update t_gift_grants
+    <set >
+      <if test="giftId != null" >
+        gift_id = #{giftId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="giftNum != null" >
+        gift_num = #{giftNum,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.anchora.garbage.entry.GiftGrants" >
+    update t_gift_grants
+    set gift_id = #{giftId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      gift_num = #{giftNum,jdbcType=REAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="me.anchora.garbage.entry.GiftGrantsCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_gift_grants
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <resultMap extends="BaseResultMap" id="WithGiftResultMap" type="me.anchora.garbage.entry.GiftGrants">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gift_id" property="giftId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="gift_num" property="giftNum" jdbcType="REAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="BIGINT" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="BIGINT" />
+	<association property="gifts" javaType="me.anchora.garbage.entry.Gifts" >
+		<id column="g_id" property="id" jdbcType="BIGINT" />
+		<result column="g_gift_name" property="giftName" jdbcType="VARCHAR" />
+		<result column="g_gift_num" property="giftNum" jdbcType="REAL" />
+		<result column="g_gift_grant_num" property="giftGrantNum" jdbcType="REAL" />
+		<result column="g_score" jdbcType="REAL" property="score" />
+		<result column="g_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="g_created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="g_created_by" property="createdBy" jdbcType="BIGINT" />
+		<result column="g_updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="g_updated_by" property="updatedBy" jdbcType="BIGINT" />
+	</association>
+	<association property="users" javaType="me.anchora.garbage.entry.Users" >
+    	<id column="u_id" jdbcType="BIGINT" property="id" />
+	    <result column="u_user_name" jdbcType="VARCHAR" property="userName" />
+	    <result column="u_password" jdbcType="VARCHAR" property="password" />
+	    <result column="u_real_name" jdbcType="VARCHAR" property="realName" />
+	    <result column="u_score" jdbcType="REAL" property="score" />
+	    <result column="u_gender" jdbcType="VARCHAR" property="gender" />
+	    <result column="u_birthday" jdbcType="DATE" property="birthday" />
+	    <result column="u_village" jdbcType="VARCHAR" property="village" />
+	    <result column="u_phone" jdbcType="VARCHAR" property="phone" />
+	    <result column="u_address" jdbcType="VARCHAR" property="address" />
+	    <result column="u_timezone" jdbcType="VARCHAR" property="timezone" />
+	    <result column="u_is_admin" jdbcType="VARCHAR" property="isAdmin" />
+	    <result column="u_current_login" jdbcType="TIMESTAMP" property="currentLogin" />
+	    <result column="u_last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+	    <result column="u_current_login_ip" jdbcType="VARCHAR" property="currentLoginIp" />
+	    <result column="u_last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+	    <result column="u_remark" jdbcType="VARCHAR" property="remark" />
+	    <result column="u_created_at" jdbcType="TIMESTAMP" property="createdAt" />
+	    <result column="u_created_by" jdbcType="BIGINT" property="createdBy" />
+	    <result column="u_updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+	    <result column="u_updated_by" jdbcType="BIGINT" property="updatedBy" />
+	</association>
+  </resultMap>
+  
+  <sql id="WithGift_Where_Clause">
+  	<where>
+  		<if test="userName != null and userName != ''">
+  			u.user_name like '${userName}'
+  		</if>
+  		<if test="realName != null and realName != ''">
+  			u.real_name like '${realName}'
+  		</if>
+  		<if test="giftName != null and giftName != ''">
+  			g.gift_name like '${giftName}'
+  		</if>
+  		<if test="remark != null and remark != ''">
+  			gg.remark like '${remark}'
+  		</if>
+  	</where>
+  </sql>
+  
+  <select id="selectByExampleWithGiftWithRowbounds" parameterType="me.anchora.garbage.entry.GiftGrants" resultMap="WithGiftResultMap">
+    SELECT
+    <if test="distinct">
+      distinct
+    </if>
+	gg.id, gg.gift_id, gg.user_id, gg.gift_num, gg.remark, gg.created_at, gg.created_by, gg.updated_at, gg.updated_by,
+	g.id as g_id, g.gift_name as g_gift_name, g.gift_num as g_gift_num, g.gift_grant_num as g_gift_grant_num, g.score as g_score, g.remark as g_remark, g.created_at as g_created_at, g.created_by as g_created_by, g.updated_at as g_updated_at, g.updated_by as g_updated_by,
+	u.id as u_id, u.user_name as u_user_name, u.password as u_password, u.real_name as u_real_name, u.score as u_score, u.gender as u_gender, u.birthday as u_birthday, u.village as u_village, u.phone as u_phone, u.address as u_address, u.timezone as u_timezone, u.is_admin as u_is_admin, u.current_login as u_current_login, u.last_login as u_last_login, u.current_login_ip as u_current_login_ip, u.last_login_ip as u_last_login_ip, u.remark as u_remark, u.created_at as u_created_at, u.created_by as u_created_by, u.updated_at as u_updated_at, u.updated_by as u_updated_by 
+	FROM t_gift_grants gg
+	LEFT JOIN t_gifts g ON g.id = gg.gift_id
+	LEFT JOIN t_users u ON u.id = gg.user_id
+	<if test="_parameter != null">
+      <include refid="WithGift_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="countByExampleWithGift" parameterType="me.anchora.garbage.entry.GiftGrants" resultType="java.lang.Integer">
+    select count(*)
+	FROM t_gift_grants gg
+	LEFT JOIN t_gifts g ON g.id = gg.gift_id
+	LEFT JOIN t_users u ON u.id = gg.user_id
+    <include refid="WithGift_Where_Clause" />
+  </select>
+  
+  <select id="createTable">
+	CREATE TABLE t_gift_grants (
+	id bigint(20) NOT NULL AUTO_INCREMENT,
+	gift_id bigint(20) NOT NULL,
+	user_id bigint(20) NOT NULL,
+	gift_num float(20,2) NOT NULL,
+	remark varchar(1000),
+	created_at datetime,
+	created_by bigint(20),
+	updated_at datetime,
+	updated_by bigint(20),
+	PRIMARY KEY (id)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8
+  </select>
+
+  <select id="insertData">
+  </select>
+</mapper>

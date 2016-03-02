@@ -1,2 +1,1 @@
-# garbage-web
-Garbage management system
+# garbagemgr

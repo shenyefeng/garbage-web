@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.anchora.garbage.dao.MenusMapper" >
+  <resultMap id="BaseResultMap" type="me.anchora.garbage.entry.Menus" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="parent_menu_id" property="parentMenuId" jdbcType="BIGINT" />
+    <result column="menu_order" property="menuOrder" jdbcType="BIGINT" />
+    <result column="style_class" property="styleClass" jdbcType="VARCHAR" />
+    <result column="menu_item_id" property="menuItemId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="BIGINT" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, menu_name, parent_menu_id, menu_order, style_class, menu_item_id, remark, created_at, 
+    created_by, updated_at, updated_by
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.anchora.garbage.entry.MenusCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_menus
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_menus
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.anchora.garbage.entry.MenusCriteria" >
+    delete from t_menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.anchora.garbage.entry.Menus" >
+    insert into t_menus (id, menu_name, parent_menu_id, 
+      menu_order, style_class, menu_item_id, 
+      remark, created_at, created_by, 
+      updated_at, updated_by)
+    values (#{id,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, #{parentMenuId,jdbcType=BIGINT}, 
+      #{menuOrder,jdbcType=BIGINT}, #{styleClass,jdbcType=VARCHAR}, #{menuItemId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=BIGINT}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="me.anchora.garbage.entry.Menus" >
+    insert into t_menus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="parentMenuId != null" >
+        parent_menu_id,
+      </if>
+      <if test="menuOrder != null" >
+        menu_order,
+      </if>
+      <if test="styleClass != null" >
+        style_class,
+      </if>
+      <if test="menuItemId != null" >
+        menu_item_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMenuId != null" >
+        #{parentMenuId,jdbcType=BIGINT},
+      </if>
+      <if test="menuOrder != null" >
+        #{menuOrder,jdbcType=BIGINT},
+      </if>
+      <if test="styleClass != null" >
+        #{styleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="menuItemId != null" >
+        #{menuItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.anchora.garbage.entry.MenusCriteria" resultType="java.lang.Integer" >
+    select count(*) from t_menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_menus
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuName != null" >
+        menu_name = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentMenuId != null" >
+        parent_menu_id = #{record.parentMenuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuOrder != null" >
+        menu_order = #{record.menuOrder,jdbcType=BIGINT},
+      </if>
+      <if test="record.styleClass != null" >
+        style_class = #{record.styleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuItemId != null" >
+        menu_item_id = #{record.menuItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null" >
+        created_by = #{record.createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedBy != null" >
+        updated_by = #{record.updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_menus
+    set id = #{record.id,jdbcType=BIGINT},
+      menu_name = #{record.menuName,jdbcType=VARCHAR},
+      parent_menu_id = #{record.parentMenuId,jdbcType=BIGINT},
+      menu_order = #{record.menuOrder,jdbcType=BIGINT},
+      style_class = #{record.styleClass,jdbcType=VARCHAR},
+      menu_item_id = #{record.menuItemId,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      created_by = #{record.createdBy,jdbcType=BIGINT},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{record.updatedBy,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.anchora.garbage.entry.Menus" >
+    update t_menus
+    <set >
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMenuId != null" >
+        parent_menu_id = #{parentMenuId,jdbcType=BIGINT},
+      </if>
+      <if test="menuOrder != null" >
+        menu_order = #{menuOrder,jdbcType=BIGINT},
+      </if>
+      <if test="styleClass != null" >
+        style_class = #{styleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="menuItemId != null" >
+        menu_item_id = #{menuItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.anchora.garbage.entry.Menus" >
+    update t_menus
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      parent_menu_id = #{parentMenuId,jdbcType=BIGINT},
+      menu_order = #{menuOrder,jdbcType=BIGINT},
+      style_class = #{styleClass,jdbcType=VARCHAR},
+      menu_item_id = #{menuItemId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="me.anchora.garbage.entry.MenusCriteria" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_menus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="WithManyResultMap" extends="BaseResultMap" type="me.anchora.garbage.entry.Menus" >
+    <id column="id" property="menuLanguageUser" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="parent_menu_id" property="parentMenuLanguageUser" jdbcType="VARCHAR" />
+    <result column="menu_order" property="menuOrder" jdbcType="BIGINT" />
+    <result column="style_class" property="styleClass" jdbcType="VARCHAR" />
+    <result column="menu_item_id" property="menuItemId" jdbcType="VARCHAR" />
+	<association property="menuDetails" javaType="me.anchora.garbage.entry.MenuDetails" >
+      <result column="menu_value" property="menuValue" jdbcType="VARCHAR"/>
+    </association>
+	<association property="users" javaType="me.anchora.garbage.entry.Users" >
+      <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+    </association>
+	<association property="menuLanguages" javaType="me.anchora.garbage.entry.MenuLanguages" >
+      <result column="lang_name" property="langName" jdbcType="VARCHAR"/>
+    </association>
+
+  </resultMap>
+  <select id="selectWithMany" resultMap="WithManyResultMap">
+	SELECT id, menu_name, parent_menu_id, menu_order, style_class, menu_item_id, menu_value, user_name, lang_name FROM (
+	SELECT CONCAT(m.id, ml.id, l.id) AS id, m.menu_name AS menu_name, CONCAT(m.parent_menu_id, ml.id, l.id) AS parent_menu_id, m.menu_order AS menu_order, m.style_class AS style_class, m.menu_item_id AS menu_item_id, md.menu_value AS menu_value, l.user_name AS user_name, ml.lang_name AS lang_name FROM t_menus m
+	LEFT JOIN t_menu_details md ON m.id = md.menu_id
+	LEFT JOIN t_menu_languages ml ON md.lang_id = ml.id
+	LEFT JOIN t_role_menus rm ON rm.menu_id = m.id
+	LEFT JOIN t_role_users ru ON ru.role_id = rm.role_id
+	LEFT JOIN t_users l ON l.id = ru.user_id
+	WHERE rm.has_right = 'Y'
+	UNION
+	SELECT CONCAT(m.id, ml.id, l.id) AS id, m.menu_name AS menu_name, CONCAT(m.parent_menu_id, ml.id, l.id) AS parent_menu_id, m.menu_order AS menu_order, m.style_class AS style_class, m.menu_item_id AS menu_item_id, md.menu_value AS menu_value, l.user_name AS user_name, ml.lang_name AS lang_name FROM t_menus m
+	LEFT JOIN t_menu_details md ON m.id = md.menu_id
+	LEFT JOIN t_menu_languages ml ON md.lang_id = ml.id
+	LEFT JOIN t_user_menus um ON um.menu_id = m.id
+	LEFT JOIN t_users l ON l.id = um.user_id
+	WHERE um.has_right = 'Y'
+	) t
+	ORDER BY t.user_name, t.lang_name, t.parent_menu_id, t.menu_order
+  </select>
+  <select id="createTable">
+CREATE TABLE t_menus (
+id bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号ID',
+menu_name varchar(255) NOT NULL COMMENT 'menu name',
+parent_menu_id bigint(20) COMMENT '父菜单编号ID',
+menu_order bigint(20) COMMENT '顺序号',
+style_class varchar(255) COMMENT '菜单样式',
+menu_item_id varchar(255) COMMENT '菜单id，用于js触发',
+remark varchar(1000),
+created_at datetime,
+created_by bigint(20),
+updated_at datetime,
+updated_by bigint(20),
+PRIMARY KEY (id),
+UNIQUE KEY ix_menus_1 (menu_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+  </select>
+
+  <select id="insertData">
+INSERT INTO `t_menus` VALUES 
+ ('1', 'overview', null, '1', 'icon-roof', 'tab_overview', null, sysdate(), null, null, null),
+ ('2', 'management', null, '2', 'icon-manage', null, null, sysdate(), null, null, null),
+ ('3', 'settings', null, '3', 'icon-system', null, null, sysdate(), null, null, null),
+ ('4', 'users', '2', '1', null, 'tab_users', null, sysdate(), null, null, null),
+ ('5', 'qrcodes', '2', '2', null, 'tab_qrcodes', null, sysdate(), null, null, null),
+ ('6', 'garbages', '2', '3', null, 'tab_garbages', null, sysdate(), null, null, null),
+ ('7', 'stations', '2', '4', null, 'tab_stations', null, sysdate(), null, null, null),
+ ('8', 'garbagecans', '2', '5', null, 'tab_garbagecans', null, sysdate(), null, null, null),
+ ('9', 'garbagetypes', '2', '6', null, 'tab_garbagetypes', null, sysdate(), null, null, null),
+ ('10', 'gifts', '2', '7', null, 'tab_gifts', null, sysdate(), null, null, null),
+ ('11', 'giftgrants', '2', '8', null, 'tab_giftgrants', null, sysdate(), null, null, null),
+ ('12', 'config', '3', '1', null, 'tab_config', null, sysdate(), null, null, null),
+ ('13', 'report', null, '3', 'icon-manage', null, null, sysdate(), null, null, null),
+ ('14', 'type_report', '13', '1', null, 'tab_type_report', null, sysdate(), null, null, null),
+ ('15', 'user_report', '13', '2', null, 'tab_user_report', null, sysdate(), null, null, null)
+  </select>
+</mapper>
