@@ -39,7 +39,7 @@
         <property name="testQuery" value="SELECT 1"/>
 	</bean>
  -->	
-	<bean id="DS-garbagemgr" class="org.apache.commons.dbcp.BasicDataSource">
+	<bean id="DS-garbagemgr" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="${garbagemgr.driver}"/>
 		<property name="url" value="jdbc:mysql://${garbagemgr.ip}:${garbagemgr.port}/${garbagemgr.dbname}?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true"/>
 		<property name="username" value="${garbagemgr.username}"/>
