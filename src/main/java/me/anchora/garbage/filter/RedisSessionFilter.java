@@ -2,6 +2,9 @@ package me.anchora.garbage.filter;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,7 +14,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
@@ -65,20 +67,35 @@ public class RedisSessionFilter implements Filter {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void handle(final HttpServletRequest request, final HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
 		Jedis jedis = jedisPool.getResource();
 		String sessionId = request.getSession().getId();
+		Map<String, Object> map;
 		if(jedis.exists(sessionId.getBytes())) {
 			try {
-				HttpSession s = (HttpSession)SerializableUtils.fromByteArray(jedis.get(sessionId.getBytes()));
-//				s.getServletContext().geta;
+				map = (HashMap<String, Object>)SerializableUtils.fromByteArray(jedis.get(sessionId.getBytes()));
+				for(String key : map.keySet()) {
+					request.getSession().setAttribute(key, map.get(key));
+				}
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}
 		} else {
-			jedis.set(sessionId.getBytes(), SerializableUtils.toByteArray(request.getSession()));
+			map = new HashMap<String, Object>();
+			Enumeration<?> e = request.getSession().getAttributeNames();
+			String key;
+			while(e.hasMoreElements()) {
+				key = (String)e.nextElement();
+				if(request.getSession().getAttribute(key) != null) {
+					map.put(key, request.getSession().getAttribute(key));
+				}
+			}
+			if(map.size() > 0) {
+				jedis.set(sessionId.getBytes(), SerializableUtils.toByteArray(map));
+			}
 		}
 		chain.doFilter(request, response);
 	}
