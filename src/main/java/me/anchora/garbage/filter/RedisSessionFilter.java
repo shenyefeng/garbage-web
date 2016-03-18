@@ -47,14 +47,14 @@ public class RedisSessionFilter implements Filter {
 				jedisPool = new JedisPool(config, new URI(uri));
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			logger.error("RedisSessionFilter init error!");
 		}
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		if (request instanceof HttpServletRequest && cacheFlag) {
+		if (request instanceof HttpServletRequest && cacheFlag && jedisPool != null) {
 			currentFilter.set(this);
 			currentRequest.set((HttpServletRequest) request);
 			currentResponse.set((HttpServletResponse) response);
