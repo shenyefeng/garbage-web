@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import me.anchora.garbage.msg.MsgEnum;
@@ -87,12 +88,23 @@ public class PaasResult {
     }
 
     public void asynchronousPrintResult(HttpServletResponse response, Object value) {
+    	asynchronousPrintResult(null, response, value);
+    }
+
+    public void asynchronousPrintResult(HttpServletRequest request, HttpServletResponse response, Object value) {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = null;
         try {
             writer = response.getWriter();
-            writer.print(value.toString());
+            String result;
+            if(request != null && request.getParameter("callback") != null) {
+            	result = request.getParameter("callback") + "(" + value.toString() + ")";
+            } else {
+            	result = value.toString();
+            }
+            logger.debug("result: " + result);
+            writer.print(result);
             writer.flush();
             writer.close();
         } catch (IOException e) {
