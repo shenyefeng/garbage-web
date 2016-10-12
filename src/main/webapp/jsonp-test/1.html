@@ -3,16 +3,16 @@
 <head> 
 <title></title> 
 <script type="text/javascript"> 
-// µÃµ½º½°àĞÅÏ¢²éÑ¯½á¹ûºóµÄ»Øµ÷º¯Êı 
+// å¾—åˆ°èˆªç­ä¿¡æ¯æŸ¥è¯¢ç»“æœåçš„å›è°ƒå‡½æ•° 
 var flightHandler = function(data){ 
-alert('Äã²éÑ¯µÄº½°à½á¹ûÊÇ£ºÆ±¼Û ' + data.price + ' Ôª£¬' + 'ÓàÆ± ' + data.tickets + ' ÕÅ¡£'); 
+alert('ä½ æŸ¥è¯¢çš„èˆªç­ç»“æœæ˜¯ï¼šç¥¨ä»· ' + data.price + ' å…ƒï¼Œ' + 'ä½™ç¥¨ ' + data.tickets + ' å¼ ã€‚'); 
 }; 
-// Ìá¹©jsonp·şÎñµÄurlµØÖ·£¨²»¹ÜÊÇÊ²Ã´ÀàĞÍµÄµØÖ·£¬×îÖÕÉú³ÉµÄ·µ»ØÖµ¶¼ÊÇÒ»¶Îjavascript´úÂë£© 
+// æä¾›jsonpæœåŠ¡çš„urlåœ°å€ï¼ˆä¸ç®¡æ˜¯ä»€ä¹ˆç±»å‹çš„åœ°å€ï¼Œæœ€ç»ˆç”Ÿæˆçš„è¿”å›å€¼éƒ½æ˜¯ä¸€æ®µjavascriptä»£ç ï¼‰ 
 var url = "http://test.com/test/remote.js"; 
-// ´´½¨script±êÇ©£¬ÉèÖÃÆäÊôĞÔ 
+// åˆ›å»ºscriptæ ‡ç­¾ï¼Œè®¾ç½®å…¶å±æ€§ 
 var script = document.createElement('script'); 
 script.setAttribute('src', url); 
-// °Ñscript±êÇ©¼ÓÈëhead£¬´ËÊ±µ÷ÓÃ¿ªÊ¼ 
+// æŠŠscriptæ ‡ç­¾åŠ å…¥headï¼Œæ­¤æ—¶è°ƒç”¨å¼€å§‹ 
 document.getElementsByTagName('head')[0].appendChild(script); 
 </script> 
 </head> 
